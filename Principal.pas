@@ -14,7 +14,6 @@ type
     GroupBox1: TGroupBox;
     Label1: TLabel;
     Label2: TLabel;
-    Label3: TLabel;
     btnClique: TButton;
     Panel1: TPanel;
     btnbuscar: TButton;
@@ -27,7 +26,6 @@ type
     GroupBox2: TGroupBox;
     Label5: TLabel;
     Label6: TLabel;
-    Label7: TLabel;
     Label8: TLabel;
     Button3: TButton;
     Panel2: TPanel;
@@ -38,12 +36,33 @@ type
     Button6: TButton;
     vcor: TDBEdit;
     Button7: TButton;
+    GroupBox3: TGroupBox;
+    Label9: TLabel;
+    Label10: TLabel;
+    Button9: TButton;
+    Button10: TButton;
+    s1_pos_x: TDBEdit;
+    s1_pos_y: TDBEdit;
+    GroupBox4: TGroupBox;
+    Label12: TLabel;
+    s1_ccor: TDBEdit;
+    Label11: TLabel;
+    Panel3: TPanel;
+    GroupBox5: TGroupBox;
+    Label13: TLabel;
+    Label14: TLabel;
+    s1_vcor: TDBEdit;
+    Panel4: TPanel;
     ClientDataSet1bc_pos_x: TStringField;
     ClientDataSet1bc_pos_y: TStringField;
     ClientDataSet1bc_cor: TStringField;
     ClientDataSet1bv_pos_x: TStringField;
     ClientDataSet1bv_pos_y: TStringField;
     ClientDataSet1bv_cor: TStringField;
+    ClientDataSet1s1_pos_x: TStringField;
+    ClientDataSet1s1_pos_y: TStringField;
+    ClientDataSet1s1c_cor: TStringField;
+    ClientDataSet1s1v_cor: TStringField;
     procedure btnCliqueClick(Sender: TObject);
     procedure Panel1MouseDown(Sender: TObject; Button: TMouseButton;
       Shift: TShiftState; X, Y: Integer);
@@ -62,6 +81,10 @@ type
     procedure Button4Click(Sender: TObject);
     procedure Button3Click(Sender: TObject);
     procedure Button6Click(Sender: TObject);
+    procedure Button10Click(Sender: TObject);
+    procedure Panel4Click(Sender: TObject);
+    procedure Button9Click(Sender: TObject);
+    procedure Panel3Click(Sender: TObject);
 
   private
 
@@ -74,7 +97,7 @@ var
   Form_Principal: TForm_Principal;
   Pt: TPoint;
   arq: TextFile;
-  bc,bv: Integer;
+  bc,bv,s1,s1c_cor,s1v_cor: Integer;
 
 implementation
 
@@ -135,6 +158,7 @@ begin
 end;
 
 procedure TForm_Principal.Timer1Timer(Sender: TObject);
+var t1,t2,tx3,ty4 :integer;
 begin
   Pt := ClientToScreen(pt);
   GetCursorPos(Pt); // Pega a posição atual do mouse;
@@ -169,13 +193,54 @@ begin
   end;
 
 
+    //sensor 1 posição
+  if s1 = 1 then begin
+  {Converte Pt para as coordenadas da tela }
+  Pt.x := Round(Pt.x * (65535 / Screen.Width));
+  Pt.y := Round(Pt.y * (65535 / Screen.Height));
+
+  s1_pos_x.Text := IntToStr(Pt.x);
+  s1_pos_y.Text := IntToStr(Pt.y);
+  end;
+
+     //sensor 1 cor de venda
+  if s1v_cor = 1 then begin
+  //mudar cor do panel
+  Panel4.Color := DesktopColor(Pt.X, Pt.Y);
+  Panel4.Refresh;
+  s1_vcor.Text := ColorToString(Panel4.Color);
+  end;
+
+       //sensor 1 cor de compra
+  if s1c_cor = 1 then begin
+  //mudar cor do panel
+  Panel3.Color := DesktopColor(Pt.X, Pt.Y);
+  Panel3.Refresh;
+  s1_ccor.Text := ColorToString(Panel3.Color);
+  end;
+
+
+  //teste localizar cor pelas cordenadas
+  {t1 :=  StrToInt(vpos_x.Text);
+  t2 :=  StrToInt(vpos_y.Text);
+  tx3 := Round(t1 / (65535 / Screen.Width));
+  ty4 := Round(t2 / (65535 / Screen.Height));
+  Panel3.Color := DesktopColor(tx3,ty4);
+  Panel3.Caption := IntToStr(tx3)+' - '+IntToStr(ty4);
+  Panel3.Refresh;  }
+  //fim de teste
+
   //verifica se clicou fora do form
   if((GetAsyncKeyState(VK_LBUTTON) and 1)=1) then
   begin
     if (mouse.CursorPos.x<Form_Principal.Left) or (mouse.CursorPos.x>(Form_Principal.left+Form_Principal.Width)) or (mouse.CursorPos.y<Form_Principal.Top) or (mouse.CursorPos.y>(Form_Principal.Top+Form_Principal.Height)) then
       begin
-        //ShowMessage('Clicou fora do Form');
-        //gravar possição e cor fechar dataset
+          if  s1v_cor = 1 then begin
+            s1v_cor := 0;
+          end;
+          if  s1c_cor = 1 then begin
+            s1c_cor := 0;
+          end;
       end;
   end;
 end;
@@ -202,7 +267,17 @@ end;
 if vcor.Text <> '' then begin
 Panel2.Color := StringToColor(vcor.Text);
 end;
+//fim
 
+//painel dos sensores
+if s1_ccor.Text <> '' then begin
+Panel3.Color := StringToColor(s1_ccor.Text);
+end;
+
+if s1_vcor.Text <> '' then begin
+Panel4.Color := StringToColor(s1_vcor.Text);
+end;
+//fim
 end;
 
 procedure TForm_Principal.btnbuscarClick(Sender: TObject);
@@ -252,6 +327,33 @@ procedure TForm_Principal.Button6Click(Sender: TObject);
 begin
 {Move o mouse}
 Mouse_Event(MOUSEEVENTF_ABSOLUTE or MOUSEEVENTF_MOVE, StrToInt(vpos_x.Text), StrToInt(vpos_y.Text), 0, 0);
+end;
+
+procedure TForm_Principal.Button10Click(Sender: TObject);
+begin
+s1 := 1;
+ClientDataSet1.Edit;
+end;
+
+procedure TForm_Principal.Panel4Click(Sender: TObject);
+begin
+  if s1v_cor = 0 then begin
+  s1v_cor := 1;
+  ClientDataSet1.Edit;
+  end;
+end;
+
+procedure TForm_Principal.Button9Click(Sender: TObject);
+begin
+s1 := 0;
+end;
+
+procedure TForm_Principal.Panel3Click(Sender: TObject);
+begin
+  if s1c_cor = 0 then begin
+  s1c_cor := 1;
+  ClientDataSet1.Edit;
+  end;
 end;
 
 end.
