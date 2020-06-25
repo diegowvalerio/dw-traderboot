@@ -1,0 +1,55 @@
+unit DwTraderBoot;
+
+interface
+
+uses
+  Windows, Messages, SysUtils, Variants, Classes, Graphics, Controls, Forms,
+  Dialogs, StdCtrls, ExtCtrls;
+
+type
+  TForm_Principal = class(TForm)
+    Label1: TLabel;
+    Timer1: TTimer;
+    btnTeste: TButton;
+    btnClique: TButton;
+    procedure btnCliqueClick(Sender: TObject);
+    procedure btnTesteClick(Sender: TObject);
+  private
+    x : integer;
+    y : integer;
+  public
+
+  end;
+
+var
+  Form_Principal: TForm_Principal;
+  pt: TPoint;
+
+implementation
+
+{$R *.dfm}
+
+procedure TForm_Principal.btnTesteClick(Sender: TObject);
+begin
+  GetCursorPos(pt); // Pega a posição atual do mouse;
+  {Converte Pt para as coordenadas da tela }
+  pt := ClientToScreen(pt);
+  pt.x := Round(pt.x * (65535 / Screen.Width));
+  pt.y := Round(pt.y * (65535 / Screen.Height));
+  x := pt.x;
+  y := pt.y;
+  Label1.Caption := IntToStr(x) +',' +   IntToStr(y);
+  ShowMessage('Teste ok');
+end;
+
+procedure TForm_Principal.btnCliqueClick(Sender: TObject);
+begin
+{Move o mouse}
+Mouse_Event(MOUSEEVENTF_ABSOLUTE or MOUSEEVENTF_MOVE, x, y, 0, 0);
+{Simula o pressionamento do botãoesquerdo do mouse}
+mouse_Event(MOUSEEVENTF_ABSOLUTE or MOUSEEVENTF_LEFTDOWN, x, y, 0, 0);
+{ Simula soltando o botãoesquerdo do mouse }
+mouse_Event(MOUSEEVENTF_ABSOLUTE or MOUSEEVENTF_LEFTUP, x, y, 0, 0);
+end;
+
+end.

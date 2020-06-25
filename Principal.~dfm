@@ -1,0 +1,200 @@
+object Form_Principal: TForm_Principal
+  Left = 551
+  Top = 303
+  Width = 571
+  Height = 316
+  Caption = 'Dw TraderBoot'
+  Color = clBtnFace
+  Font.Charset = DEFAULT_CHARSET
+  Font.Color = clWindowText
+  Font.Height = -11
+  Font.Name = 'MS Sans Serif'
+  Font.Style = []
+  OldCreateOrder = False
+  OnCreate = FormCreate
+  OnShow = FormShow
+  PixelsPerInch = 96
+  TextHeight = 13
+  object GroupBox1: TGroupBox
+    Left = 0
+    Top = 0
+    Width = 553
+    Height = 73
+    Caption = 'Bot'#227'o de Compra :'
+    TabOrder = 0
+    object Label1: TLabel
+      Left = 8
+      Top = 24
+      Width = 48
+      Height = 13
+      Caption = 'Posi'#231#227'o X'
+    end
+    object Label2: TLabel
+      Left = 79
+      Top = 24
+      Width = 48
+      Height = 13
+      Caption = 'Posi'#231#227'o Y'
+    end
+    object Label3: TLabel
+      Left = 240
+      Top = 24
+      Width = 19
+      Height = 13
+      Caption = 'Cor:'
+    end
+    object Label4: TLabel
+      Left = 152
+      Top = 24
+      Width = 52
+      Height = 13
+      Caption = 'C'#243'digo Cor'
+      FocusControl = cor
+    end
+    object btnClique: TButton
+      Left = 411
+      Top = 10
+      Width = 75
+      Height = 25
+      Caption = 'Testar'
+      TabOrder = 0
+      OnClick = btnCliqueClick
+    end
+    object Panel1: TPanel
+      Left = 241
+      Top = 40
+      Width = 49
+      Height = 19
+      BiDiMode = bdLeftToRight
+      Ctl3D = True
+      Font.Charset = DEFAULT_CHARSET
+      Font.Color = clWindowText
+      Font.Height = -11
+      Font.Name = 'MS Sans Serif'
+      Font.Style = []
+      ParentBiDiMode = False
+      ParentColor = True
+      ParentCtl3D = False
+      ParentFont = False
+      ParentShowHint = False
+      ShowHint = False
+      TabOrder = 1
+      OnMouseDown = Panel1MouseDown
+      OnMouseMove = Panel1MouseMove
+      OnMouseUp = Panel1MouseUp
+    end
+    object btnbuscar: TButton
+      Left = 323
+      Top = 42
+      Width = 75
+      Height = 25
+      Caption = 'Gravar'
+      TabOrder = 2
+      OnClick = btnbuscarClick
+    end
+    object Button1: TButton
+      Left = 323
+      Top = 10
+      Width = 75
+      Height = 25
+      Caption = 'Iniciar'
+      TabOrder = 3
+      OnClick = Button1Click
+    end
+    object pos_x: TDBEdit
+      Left = 8
+      Top = 40
+      Width = 65
+      Height = 21
+      DataField = 'bc_pos_x'
+      DataSource = DataSource1
+      TabOrder = 4
+    end
+    object pos_y: TDBEdit
+      Left = 80
+      Top = 40
+      Width = 65
+      Height = 21
+      DataField = 'bc_pos_y'
+      DataSource = DataSource1
+      TabOrder = 5
+    end
+    object Button2: TButton
+      Left = 412
+      Top = 42
+      Width = 75
+      Height = 25
+      Caption = 'Ver'
+      TabOrder = 6
+      OnClick = Button2Click
+    end
+    object cor: TDBEdit
+      Left = 152
+      Top = 40
+      Width = 81
+      Height = 21
+      DataField = 'bc_cor'
+      DataSource = DataSource1
+      TabOrder = 7
+    end
+  end
+  object Timer1: TTimer
+    OnTimer = Timer1Timer
+    Left = 104
+    Top = 216
+  end
+  object ClientDataSet1: TClientDataSet
+    Active = True
+    Aggregates = <>
+    FileName = 'cadastro.xml'
+    FieldDefs = <
+      item
+        Name = 'bc_pos_x'
+        Attributes = [faUnNamed]
+        DataType = ftString
+        Size = 25
+      end
+      item
+        Name = 'bc_pos_y'
+        Attributes = [faUnNamed]
+        DataType = ftString
+        Size = 25
+      end
+      item
+        Name = 'bc_cor'
+        Attributes = [faUnNamed]
+        DataType = ftString
+        Size = 25
+      end>
+    IndexDefs = <>
+    Params = <>
+    StoreDefs = True
+    Left = 144
+    Top = 216
+    Data = {
+      CE0000009619E0BD010000001800000003000300000003000000A6000862635F
+      706F735F7801004900100001000557494454480200020019000862635F706F73
+      5F7901004900100001000557494454480200020019000662635F636F72010049
+      001000010005574944544802000200190001000A4348414E47455F4C4F470400
+      8200090000000100000000000000040000000200000001000000080000000300
+      00000200000008000000051004363137380536343434330D1004333130360532
+      323831360C10053131313936053634333832}
+    object bc_pos_x: TStringField
+      FieldName = 'bc_pos_x'
+      Size = 25
+    end
+    object bc_pos_y: TStringField
+      FieldName = 'bc_pos_y'
+      Size = 25
+    end
+    object bc_cor: TStringField
+      FieldName = 'bc_cor'
+      Size = 25
+    end
+  end
+  object DataSource1: TDataSource
+    DataSet = ClientDataSet1
+    Left = 176
+    Top = 216
+  end
+end

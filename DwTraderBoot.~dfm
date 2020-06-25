@@ -1,0 +1,45 @@
+object Form_Principal: TForm_Principal
+  Left = 376
+  Top = 205
+  Width = 921
+  Height = 604
+  Caption = 'Dw TraderBoot'
+  Color = clBtnFace
+  Font.Charset = DEFAULT_CHARSET
+  Font.Color = clWindowText
+  Font.Height = -11
+  Font.Name = 'MS Sans Serif'
+  Font.Style = []
+  OldCreateOrder = False
+  PixelsPerInch = 96
+  TextHeight = 13
+  object Label1: TLabel
+    Left = 16
+    Top = 56
+    Width = 713
+    Height = 81
+    Caption = 'Label1'
+  end
+  object btnTeste: TButton
+    Left = 32
+    Top = 232
+    Width = 75
+    Height = 25
+    Caption = 'btnTeste'
+    TabOrder = 0
+    OnClick = btnTesteClick
+  end
+  object btnClique: TButton
+    Left = 552
+    Top = 232
+    Width = 75
+    Height = 25
+    Caption = 'btnClique'
+    TabOrder = 1
+    OnClick = btnCliqueClick
+  end
+  object Timer1: TTimer
+    Left = 16
+    Top = 16
+  end
+end

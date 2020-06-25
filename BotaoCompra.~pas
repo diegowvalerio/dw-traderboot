@@ -1,0 +1,32 @@
+unit BotaoCompra;
+
+interface
+
+uses
+  Windows, Messages, SysUtils, Variants, Classes, Graphics, Controls, Forms,
+  Dialogs, ExtCtrls, StdCtrls;
+
+type
+  TForm_botaoCompra = class(TForm)
+    Label1: TLabel;
+    procedure FormShow(Sender: TObject);
+  private
+    { Private declarations }
+  public
+    MouseDownSpot : TPoint;
+   Capturing : bool;
+  end;
+
+var
+  Form_botaoCompra: TForm_botaoCompra;
+
+implementation
+
+{$R *.dfm}
+
+procedure TForm_botaoCompra.FormShow(Sender: TObject);
+begin
+brush.Style := bsclear;
+end;
+
+end.
